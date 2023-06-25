@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
                 padding: EdgeInsets.only(right: 8),
                 child: IconButton(
                   icon: const Icon(Icons.cancel),
-                  onPressed: () {
+                  onPressed: () async {
                     if (!kIsWeb) exit(0);
                     html.window.open('https://google.de', '_self');
                   },
@@ -60,14 +60,39 @@ class MyApp extends StatelessWidget {
             ],
           ),
           body: ColoredBox(
-            color: Colors.orange.shade300,
-            child: Center(
-              child: Text(
-                'Hello, world!',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-            ),
-          ),
+              color: Colors.orange.shade300,
+              child: FutureBuilder<ProcessResult>(
+                future: Process.run('Powershell.exe', [
+                  '(Get-WmiObject -Class Win32_PhysicalMemory | Measure-Object -Property Capacity -Sum | Select-Object -ExpandProperty Sum) / 1GB'
+                ]), // async work
+                builder: (BuildContext context,
+                    AsyncSnapshot<ProcessResult> snapshot) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.waiting:
+                      return const Text('Loading....');
+                    default:
+                      var result = 0;
+                      if (snapshot.hasError)
+                        return Text('Error: ${snapshot.error}');
+                      else
+                        result = int.parse(snapshot.data!.stdout.toString());
+                      if (result > 32)
+                        return Center(
+                            child: Icon(
+                          Icons.check_circle,
+                          color: Colors.green,
+                          size: 100,
+                        ));
+                      else
+                        return Center(
+                            child: Icon(
+                          Icons.cancel,
+                          color: Colors.red,
+                          size: 100,
+                        ));
+                  }
+                },
+              )),
         ));
   }
 }
