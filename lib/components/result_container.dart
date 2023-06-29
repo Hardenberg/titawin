@@ -27,10 +27,10 @@ class _ResultContainerState extends State<ResultContainer> {
                 SizedBox(
                   height: 100,
                 ),
-                Compatible(check: true),
-                SizedBox(
-                  height: 70,
-                ),
+                // Compatible(check: true),
+                // SizedBox(
+                //   height: 70,
+                // ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -56,10 +56,10 @@ class _ResultContainerState extends State<ResultContainer> {
                 SizedBox(
                   height: 100,
                 ),
-                Compatible(check: false),
-                SizedBox(
-                  height: 70,
-                ),
+                // Compatible(check: false),
+                // SizedBox(
+                //   height: 70,
+                // ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

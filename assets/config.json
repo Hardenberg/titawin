@@ -1,4 +1,19 @@
 {
-    "compatible_name": "ssdaw",
-    "ram_test_gb": "1"
+    "name": "Praxisprotect",
+    "ram_test_gb": 4,
+    "headline": "Check your PC for",
+    "test_array": [
+        {
+            "type": "ps",
+            "execute": "(Get-WmiObject -Class Win32_PhysicalMemory | Measure-Object -Property Capacity -Sum | Select-Object -ExpandProperty Sum) / 1GB",
+            "compare": "<=",
+            "value": 4
+        },
+        {
+            "type": "ps",
+            "execute": "(Get-WmiObject -Class Win32_PhysicalMemory | Measure-Object -Property Capacity -Sum | Select-Object -ExpandProperty Sum) / 1GB",
+            "compare": "<=",
+            "value": 4
+        }
+    ]
 }
