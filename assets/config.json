@@ -1,19 +1,30 @@
 {
-    "name": "Praxisprotect",
-    "ram_test_gb": 4,
+    "product": "Praxisprotect",
     "headline": "Check your PC for",
     "test_array": [
         {
             "type": "ps",
             "execute": "(Get-WmiObject -Class Win32_PhysicalMemory | Measure-Object -Property Capacity -Sum | Select-Object -ExpandProperty Sum) / 1GB",
-            "compare": "<=",
-            "value": 4
+            "compare": ">",
+            "value": "8",
+            "ok_text": "You have enough RAM",
+            "not_ok_text": "You don't have enough RAM"
         },
         {
             "type": "ps",
-            "execute": "(Get-WmiObject -Class Win32_PhysicalMemory | Measure-Object -Property Capacity -Sum | Select-Object -ExpandProperty Sum) / 1GB",
-            "compare": "<=",
-            "value": 4
+            "execute": "(Get-WmiObject -Class Win32_ComputerSystem).NumberOfLogicalProcessors",
+            "compare": ">=",
+            "value": "2",
+            "ok_text": "you have enough CPU cores",
+            "not_ok_text": "You don't have enough CPU cores"
+        },
+        {
+            "type": "ps",
+            "execute": "[math]::Round(((Get-WmiObject -Class Win32_LogicalDisk -Filter \"DeviceID='C:'\").FreeSpace / 1GB), 0)",
+            "compare": ">=",
+            "value": "80",
+            "ok_text": "you have enough Space",
+            "not_ok_text": "You don't have enough space"
         }
     ]
 }

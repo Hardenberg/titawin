@@ -2,12 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:titawin/application/helper.dart';
-import 'package:titawin/components/headline.dart';
-import 'package:titawin/components/result_container.dart';
+import 'package:titawin/application/view/headline.dart';
+import 'package:titawin/check/view/check_item.dart';
 import 'package:window_manager/window_manager.dart';
 import 'dart:io';
-
-import 'components/test_item.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -73,16 +71,33 @@ class MyApp extends StatelessWidget {
                       ListView list = ListView.builder(
                           itemCount: data['test_array'].length,
                           itemBuilder: (context, index) {
-                            return TestItem();
+                            return CheckItem(
+                              type: data['test_array'][index]['type'],
+                              execute: data['test_array'][index]['execute'],
+                              compare: data['test_array'][index]['compare'],
+                              value: data['test_array'][index]['value'],
+                              okText: data['test_array'][index]['ok_text'],
+                              notOkText: data['test_array'][index]
+                                  ['not_ok_text'],
+                            );
                           });
 
-                      return ListView(children: [
-                        HeadLine(
-                          text: data["headline"],
-                          name: data["name"],
-                        ),
-                        // list
-                      ]);
+                      return Column(
+                        children: [
+                          SizedBox(
+                            height: 32,
+                          ),
+                          Headline(
+                              title: data['headline'],
+                              product: data['product']),
+                          SizedBox(
+                            height: 32,
+                          ),
+                          Expanded(
+                            child: list,
+                          ),
+                        ],
+                      );
                     }
                     return Center(
                       child: CircularProgressIndicator(),
