@@ -8,14 +8,19 @@ class Headline extends StatelessWidget {
   final String product;
 
   @override
-  Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.all(16),
-        child: Text(
-          title + ' ' + product,
-          style: const TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+  Widget build(BuildContext context) => SizedBox(
+        height: 100,
+        child: Container(
+            color: const Color.fromARGB(78, 130, 178, 255),
+            padding: const EdgeInsets.only(left: 16, right: 16),
+            child: Center(
+              child: Text(
+                title + ' ' + product,
+                style: const TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            )),
       );
 }

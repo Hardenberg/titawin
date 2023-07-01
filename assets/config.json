@@ -1,5 +1,5 @@
 {
-    "product": "Praxisprotect",
+    "product": "any",
     "headline": "Check your PC for",
     "test_array": [
         {
@@ -22,7 +22,23 @@
             "type": "ps",
             "execute": "[math]::Round(((Get-WmiObject -Class Win32_LogicalDisk -Filter \"DeviceID='C:'\").FreeSpace / 1GB), 0)",
             "compare": ">=",
-            "value": "80",
+            "value": "20",
+            "ok_text": "you have enough Space",
+            "not_ok_text": "You don't have enough space"
+        },
+        {
+            "type": "ps",
+            "execute": "[math]::Round(((Get-WmiObject -Class Win32_LogicalDisk -Filter \"DeviceID='C:'\").FreeSpace / 1GB), 0)",
+            "compare": ">=",
+            "value": "20",
+            "ok_text": "you have enough Space",
+            "not_ok_text": "You don't have enough space"
+        },
+        {
+            "type": "ps",
+            "execute": "[math]::Round(((Get-WmiObject -Class Win32_LogicalDisk -Filter \"DeviceID='C:'\").FreeSpace / 1GB), 0)",
+            "compare": ">=",
+            "value": "20",
             "ok_text": "you have enough Space",
             "not_ok_text": "You don't have enough space"
         }

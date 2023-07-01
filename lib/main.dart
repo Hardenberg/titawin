@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:titawin/appbar/app_bar.dart';
 import 'package:titawin/application/helper.dart';
 import 'package:titawin/application/view/headline.dart';
 import 'package:titawin/check/view/check_item.dart';
 import 'package:window_manager/window_manager.dart';
-import 'dart:io';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,37 +37,20 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          colorScheme:
+              ColorScheme.fromSeed(seedColor: Colors.blueAccent.shade100),
           useMaterial3: true,
         ),
         home: Scaffold(
-            appBar: AppBar(
-              title: const Text(
-                'Titawin - System Requirements Checker - 0.1 Beta',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              backgroundColor: Colors.orange.shade400,
-              actions: [
-                Padding(
-                  padding: EdgeInsets.only(right: 8),
-                  child: IconButton(
-                    icon: const Icon(Icons.cancel),
-                    onPressed: () async {
-                      exit(0);
-                    },
-                  ),
-                )
-              ],
-            ),
-            body: ColoredBox(
-                color: Colors.orange.shade300,
+            appBar: TitaAppBar(),
+            body: Container(
+                color: Theme.of(context).colorScheme.onSecondary,
                 child: Center(
                     child: FutureBuilder(
                   future: Helper().loadAsset(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
                       var data = jsonDecode(snapshot.data.toString());
-                      print(data['test_array'].length);
                       ListView list = ListView.builder(
                           itemCount: data['test_array'].length,
                           itemBuilder: (context, index) {
@@ -84,9 +67,6 @@ class MyApp extends StatelessWidget {
 
                       return Column(
                         children: [
-                          SizedBox(
-                            height: 32,
-                          ),
                           Headline(
                               title: data['headline'],
                               product: data['product']),
