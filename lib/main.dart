@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:titawin/appbar/app_bar.dart';
-import 'package:titawin/application/helper.dart';
+import 'package:titawin/application/helper/color_helper.dart';
+import 'package:titawin/application/helper/file_helper.dart';
+import 'package:titawin/application/view/gradient_box.dart';
 import 'package:titawin/application/view/headline.dart';
 import 'package:titawin/check/view/check_item.dart';
 import 'package:window_manager/window_manager.dart';
@@ -11,7 +13,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await windowManager.ensureInitialized();
-
+  await windowManager.setIcon('assets/icon.png');
   WindowOptions windowOptions = WindowOptions(
     size: Size(800, 600),
     center: true,
@@ -23,6 +25,7 @@ void main() async {
 
   windowManager.waitUntilReadyToShow(windowOptions, () async {
     await windowManager.show();
+
     await windowManager.focus();
   });
 
@@ -47,7 +50,7 @@ class MyApp extends StatelessWidget {
                 color: Theme.of(context).colorScheme.onSecondary,
                 child: Center(
                     child: FutureBuilder(
-                  future: Helper().loadAsset(),
+                  future: FileHelper().loadAsset(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
                       var data = jsonDecode(snapshot.data.toString());
@@ -67,11 +70,17 @@ class MyApp extends StatelessWidget {
 
                       return Column(
                         children: [
+                          GradientBox(
+                              from: ColorHelper().getAppBarColor(),
+                              to: ColorHelper().getHeadLineColor()),
                           Headline(
                               title: data['headline'],
                               product: data['product']),
+                          GradientBox(
+                              from: ColorHelper().getHeadLineColor(),
+                              to: ColorHelper().getBodyColor(context)),
                           SizedBox(
-                            height: 32,
+                            height: 24,
                           ),
                           Expanded(
                             child: list,

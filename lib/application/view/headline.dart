@@ -9,7 +9,7 @@ class Headline extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SizedBox(
-        height: 100,
+        height: 66,
         child: Container(
             color: const Color.fromARGB(78, 130, 178, 255),
             padding: const EdgeInsets.only(left: 16, right: 16),

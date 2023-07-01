@@ -35,7 +35,7 @@ class _CheckItemState extends State<CheckItem> {
           case ConnectionState.waiting:
             return Column(children: [
               SizedBox(
-                height: 32,
+                height: 55,
               ),
               Center(
                 child: CircularProgressIndicator(),

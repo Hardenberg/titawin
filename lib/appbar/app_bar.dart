@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:titawin/application/helper/color_helper.dart';
 
 class TitaAppBar extends AppBar {
   @override
@@ -10,7 +11,7 @@ class TitaAppBar extends AppBar {
       );
 
   @override
-  Color? get backgroundColor => Colors.blueAccent.shade100;
+  Color? get backgroundColor => ColorHelper().getAppBarColor();
 
   @override
   List<Widget>? get actions => [
