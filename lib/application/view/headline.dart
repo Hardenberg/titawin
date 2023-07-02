@@ -14,8 +14,8 @@ class Headline extends StatelessWidget {
             color: const Color.fromARGB(78, 130, 178, 255),
             padding: const EdgeInsets.only(left: 16, right: 16),
             child: Center(
-              child: Text(
-                title + ' ' + product,
+              child: SelectableText(
+                "$title $product",
                 style: const TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,

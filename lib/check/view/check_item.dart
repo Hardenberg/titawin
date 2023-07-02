@@ -66,7 +66,7 @@ class _CheckItemState extends State<CheckItem> {
                     ),
                     Expanded(
                         flex: 2,
-                        child: Text(result.message,
+                        child: SelectableText(result.message,
                             style: TextStyle(
                                 fontSize: 24, fontWeight: FontWeight.bold)))
                   ],
