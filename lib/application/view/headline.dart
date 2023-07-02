@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:titawin/application/helper/color_helper.dart';
 
 class Headline extends StatelessWidget {
   const Headline({Key? key, required this.title, required this.product})
@@ -11,7 +12,7 @@ class Headline extends StatelessWidget {
   Widget build(BuildContext context) => SizedBox(
         height: 66,
         child: Container(
-            color: const Color.fromARGB(78, 130, 178, 255),
+            color: ColorHelper().getHeadLineColor(),
             padding: const EdgeInsets.only(left: 16, right: 16),
             child: Center(
               child: SelectableText(
