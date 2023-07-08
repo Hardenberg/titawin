@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:titawin/check/model/check_model.dart';
+import 'package:titawin/check/model/compare_model.dart';
 import 'package:titawin/check/service/check_service.dart';
 
 class CheckItem extends StatefulWidget {
   final String type;
   final String execute;
-  final String compare;
-  final String value;
+  final Compare compare;
   final String okText;
   final String notOkText;
 
@@ -15,7 +15,6 @@ class CheckItem extends StatefulWidget {
       required this.type,
       required this.execute,
       required this.compare,
-      required this.value,
       required this.okText,
       required this.notOkText})
       : super(key: key);
@@ -29,7 +28,7 @@ class _CheckItemState extends State<CheckItem> {
   Widget build(BuildContext context) {
     return FutureBuilder<Check>(
       future: CheckService().executeCheck(widget.execute, widget.compare,
-          widget.value, widget.type, widget.okText, widget.notOkText),
+          widget.type, widget.okText, widget.notOkText),
       builder: (BuildContext context, AsyncSnapshot<Check> snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:

@@ -6,6 +6,7 @@ import 'package:titawin/application/helper/color_helper.dart';
 import 'package:titawin/application/helper/file_helper.dart';
 import 'package:titawin/application/view/gradient_box.dart';
 import 'package:titawin/application/view/headline.dart';
+import 'package:titawin/check/model/compare_model.dart';
 import 'package:titawin/check/view/check_item.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -57,11 +58,17 @@ class MyApp extends StatelessWidget {
                       ListView list = ListView.builder(
                           itemCount: data['test_array'].length,
                           itemBuilder: (context, index) {
+                            Compare compare = Compare(
+                                type: data['test_array'][index]['compare']
+                                    ['type'],
+                                value: data['test_array'][index]['compare']
+                                    ['value'],
+                                operator: data['test_array'][index]['compare']
+                                    ['operator']);
                             return CheckItem(
                               type: data['test_array'][index]['type'],
                               execute: data['test_array'][index]['execute'],
-                              compare: data['test_array'][index]['compare'],
-                              value: data['test_array'][index]['value'],
+                              compare: compare,
                               okText: data['test_array'][index]['ok_text'],
                               notOkText: data['test_array'][index]
                                   ['not_ok_text'],
