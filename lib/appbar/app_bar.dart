@@ -1,14 +1,27 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:titawin/application/helper/color_helper.dart';
+import 'package:titawin/application/helper/file_helper.dart';
 
 class TitaAppBar extends AppBar {
   @override
-  Widget? get title => const Text(
-        'Titawin - System Requirements Checker',
-        style: TextStyle(fontWeight: FontWeight.bold),
-      );
+  Widget? get title => FutureBuilder(
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          var data = jsonDecode(snapshot.data.toString());
+          return Text(
+            'Titawin - ${data['title']}',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          );
+        }
+        return Text(
+          'Titawin -',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        );
+      },
+      future: FileHelper().loadAsset());
 
   @override
   Color? get backgroundColor => ColorHelper().getAppBarColor();
