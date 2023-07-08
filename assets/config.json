@@ -4,25 +4,45 @@
     "test_array": [
         {
             "type": "ps",
+            "execute": "(Get-WmiObject -Class Win32_ComputerSystem).SystemType",
+            "compare": {
+                "type": "regex",
+                "operator": "any",
+                "value": "x64"
+            },
+            "ok_text": "you have the correct Architecture",
+            "not_ok_text": "You are not running the correct Architecture"
+        },
+        {
+            "type": "ps",
             "execute": "(Get-WmiObject -Class Win32_PhysicalMemory | Measure-Object -Property Capacity -Sum | Select-Object -ExpandProperty Sum) / 1GB",
-            "compare": ">",
-            "value": "8",
+            "compare": {
+                "type": "number",
+                "operator": ">",
+                "value": "8"
+            },
             "ok_text": "You have enough RAM",
             "not_ok_text": "You don't have enough RAM"
         },
         {
             "type": "ps",
             "execute": "(Get-WmiObject -Class Win32_ComputerSystem).NumberOfLogicalProcessors",
-            "compare": ">=",
-            "value": "2",
+            "compare": {
+                "type": "number",
+                "operator": ">",
+                "value": "2"
+            },
             "ok_text": "you have enough CPU cores",
             "not_ok_text": "You don't have enough CPU cores"
         },
         {
             "type": "ps",
             "execute": "[math]::Round(((Get-WmiObject -Class Win32_LogicalDisk -Filter \"DeviceID='C:'\").FreeSpace / 1GB), 0)",
-            "compare": ">=",
-            "value": "202",
+            "compare": {
+                "type": "number",
+                "operator": ">=",
+                "value": "202"
+            },
             "ok_text": "you have enough Space",
             "not_ok_text": "You don't have enough space"
         }
