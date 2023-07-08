@@ -21,8 +21,9 @@ class CheckService implements ICheckService {
           int.parse(compare.value));
     } else if (compare.type == "regex") {
       tmp = calcRegex(result.stdout.toString(), compare.value);
+    } else {
+      error(null);
     }
-
     if (tmp) {
       return Check(isOk: true, message: okText);
     } else {
@@ -33,7 +34,7 @@ class CheckService implements ICheckService {
   String mapType(type) {
     if (type == "ps") return Constraints.powershell;
 
-    throw Exception("Type not found");
+    throw Exception("type not found");
   }
 
   bool calcNumber(int real, String compare, int value) {
@@ -58,5 +59,10 @@ class CheckService implements ICheckService {
 
   bool calcRegex(String regex, String patter) {
     return RegExp(patter).hasMatch(regex);
+  }
+
+  Check error(String? message) {
+    var tmp = message ?? "Error";
+    return Check(isOk: false, message: tmp);
   }
 }
