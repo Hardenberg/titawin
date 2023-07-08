@@ -57,8 +57,8 @@ class CheckService implements ICheckService {
     }
   }
 
-  bool calcRegex(String regex, String patter) {
-    return RegExp(patter).hasMatch(regex);
+  bool calcRegex(String string, String regEx) {
+    return RegExp(regEx).hasMatch(string);
   }
 
   Check error(String? message) {

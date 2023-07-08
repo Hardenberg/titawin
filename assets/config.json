@@ -15,6 +15,17 @@
         },
         {
             "type": "ps",
+            "execute": "(Get-WmiObject -Class Win32_OperatingSystem).Caption",
+            "compare": {
+                "type": "regex",
+                "operator": "any",
+                "value": "Home|Pro|Enterprise|Education"
+            },
+            "ok_text": "you have the correct Version",
+            "not_ok_text": "You are not running the correct Version"
+        },
+        {
+            "type": "ps",
             "execute": "(Get-WmiObject -Class Win32_PhysicalMemory | Measure-Object -Property Capacity -Sum | Select-Object -ExpandProperty Sum) / 1GB",
             "compare": {
                 "type": "number",
