@@ -16,10 +16,10 @@ class CheckService implements ICheckService {
     var tmp = false;
     var result = await Process.run(mapType(type), [cmd]);
 
-    if (compare.type == "number") {
+    if (compare.type == Constraints.compare_number) {
       tmp = calcNumber(int.parse(result.stdout.toString()), compare.operator,
           int.parse(compare.value));
-    } else if (compare.type == "regex") {
+    } else if (compare.type == Constraints.compare_regex) {
       tmp = calcRegex(result.stdout.toString(), compare.value);
     } else {
       error(null);

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:titawin/check/model/check_model.dart';
 import 'package:titawin/check/model/compare_model.dart';
 import 'package:titawin/check/service/check_service.dart';
+import 'package:titawin/check/view/check_item_model.dart';
 
 class CheckItem extends StatefulWidget {
   final String type;
@@ -41,64 +42,13 @@ class _CheckItemState extends State<CheckItem> {
               ),
             ]);
           default:
+            if (snapshot.hasError) return Text('Error: ${snapshot.error}');
             Check result = snapshot.data!;
 
-            if (snapshot.hasError) return Text('Error: ${snapshot.error}');
-            if (result.isOk) {
-              return SizedBox(
-                height: 100,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Center(
-                        child: Icon(
-                          Icons.check_circle,
-                          color: Colors.green,
-                          size: 100,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Expanded(
-                        flex: 2,
-                        child: SelectableText(result.message,
-                            style: TextStyle(
-                                fontSize: 24, fontWeight: FontWeight.bold)))
-                  ],
-                ),
-              );
-            } else {
-              return SizedBox(
-                height: 100,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Center(
-                        child: Icon(
-                          Icons.cancel,
-                          color: Colors.red,
-                          size: 100,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Expanded(
-                        flex: 2,
-                        child: Text(result.message,
-                            style: TextStyle(
-                                fontSize: 24, fontWeight: FontWeight.bold)))
-                  ],
-                ),
-              );
-            }
+            return CheckItemModel(
+              message: result.message,
+              isOk: result.isOk,
+            );
         }
       },
     );
