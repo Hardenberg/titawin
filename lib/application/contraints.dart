@@ -5,4 +5,7 @@ class Constraints {
   // compare types
   static final compare_number = "number";
   static final compare_regex = "regex";
+
+  // app
+  static final app_title = "Titawin -";
 }

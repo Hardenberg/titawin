@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:titawin/application/contraints.dart';
 import 'package:titawin/application/helper/color_helper.dart';
 import 'package:titawin/application/helper/file_helper.dart';
 
@@ -12,12 +13,12 @@ class TitaAppBar extends AppBar {
         if (snapshot.connectionState == ConnectionState.done) {
           var data = jsonDecode(snapshot.data.toString());
           return Text(
-            'Titawin - ${data['title']}',
+            '$Constraints.app_title ${data['title']}',
             style: TextStyle(fontWeight: FontWeight.bold),
           );
         }
         return Text(
-          'Titawin -',
+          Constraints.app_title,
           style: TextStyle(fontWeight: FontWeight.bold),
         );
       },
