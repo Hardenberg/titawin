@@ -13,7 +13,7 @@ class TitaAppBar extends AppBar {
         if (snapshot.connectionState == ConnectionState.done) {
           var data = jsonDecode(snapshot.data.toString());
           return Text(
-            '$Constraints.app_title ${data['title']}',
+            '${Constraints.app_title} ${data['title']}',
             style: TextStyle(fontWeight: FontWeight.bold),
           );
         }

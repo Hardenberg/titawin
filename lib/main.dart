@@ -16,13 +16,14 @@ void main() async {
   await windowManager.ensureInitialized();
   await windowManager.setIcon('assets/icon.png');
   WindowOptions windowOptions = WindowOptions(
-    size: Size(800, 600),
-    center: true,
-    backgroundColor: Colors.transparent,
-    skipTaskbar: true,
-    titleBarStyle: TitleBarStyle.hidden,
-    alwaysOnTop: true,
-  );
+      size: Size(1024, 800),
+      minimumSize: Size(800, 600),
+      center: true,
+      backgroundColor: Colors.transparent,
+      skipTaskbar: true,
+      titleBarStyle: TitleBarStyle.hidden,
+      alwaysOnTop: true,
+      title: '');
 
   windowManager.waitUntilReadyToShow(windowOptions, () async {
     await windowManager.show();

@@ -10,7 +10,7 @@ class CheckItemModel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 75,
+      height: 100,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -20,7 +20,7 @@ class CheckItemModel extends StatelessWidget {
               child: Icon(
                 isOk ? Icons.check_circle : Icons.cancel,
                 color: isOk ? Colors.green : Colors.red,
-                size: 75,
+                size: 85,
               ),
             ),
           ),
