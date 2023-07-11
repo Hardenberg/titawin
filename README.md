@@ -28,3 +28,42 @@ If you like what you see here, and want to help support the work being done, you
 + Refactor Codebase
 + Help Write Documentation
 
+### Configuration 
+
+```JSON
+{
+    "title": "any any any any any",
+    "product": "any",
+    "headline": "Check your PC for",
+    "test_array": [
+        {
+            "type": "ps",
+            "execute": "(Get-WmiObject -Class Win32_ComputerSystem).SystemType",
+            "compare": {
+                "type": "regex",
+                "operator": "any",
+                "value": "x64"
+            },
+            "ok_text": "you have the correct Architecture",
+            "not_ok_text": "You are not running the correct Architecture"
+        },
+        {
+            "type": "ps",
+            "execute": "[math]::Round(((Get-WmiObject -Class Win32_LogicalDisk -Filter \"DeviceID='C:'\").FreeSpace / 1GB), 0)",
+            "compare": {
+                "type": "number",
+                "operator": ">=",
+                "value": "2"
+            },
+            "ok_text": "you have enough Space",
+            "not_ok_text": "You don't have enough space"
+        }
+    ]
+}
+```
+#### Description
+```
+title: "Titawin - " + your text
+
+headline + product -> combined
+```
