@@ -1,34 +1,41 @@
 import 'dart:io';
 
-import 'package:titawin/application/contraints.dart';
+import 'package:titawin/application/static/constraints.dart';
 import 'package:titawin/check/model/check_model.dart';
-import 'package:titawin/check/model/compare_model.dart';
+import 'package:titawin/check/model/testarray_model.dart';
 
 abstract class ICheckService {
-  Future<Check> executeCheck(String cmd, Compare compare, String type,
-      String okText, String notOkText);
+  Future<Check> executeCheck(TestArray array);
 }
 
 class CheckService implements ICheckService {
   @override
-  Future<Check> executeCheck(String cmd, Compare compare, String type,
-      String okText, String notOkText) async {
+  Future<Check> executeCheck(TestArray array) async {
     var tmp = false;
-    var result = await Process.run(mapType(type), [cmd]);
 
-    if (compare.type == Constraints.compare_number) {
-      tmp = calcNumber(int.parse(result.stdout.toString()), compare.operator,
-          int.parse(compare.value));
-    } else if (compare.type == Constraints.compare_regex) {
-      tmp = calcRegex(result.stdout.toString(), compare.value);
+    if (array.children.length > 0) {
+      for (var item in array.children) {
+        var tmp = await executeCheck(item);
+        if (!tmp.isOk) {
+          return Check(isOk: false, message: array.notOkText);
+        }
+      }
+    }
+
+    var result = await Process.run(mapType(array.type), [array.execute]);
+
+    if (array.compare.type == Constraints.compare_number) {
+      tmp = calcNumber(int.parse(result.stdout.toString()),
+          array.compare.operator, int.parse(array.compare.value));
+    } else if (array.compare.type == Constraints.compare_regex) {
+      tmp = calcRegex(result.stdout.toString(), array.compare.value);
     } else {
       error(null);
     }
-    if (tmp) {
-      return Check(isOk: true, message: okText);
-    } else {
-      return Check(isOk: false, message: notOkText);
-    }
+
+    return tmp
+        ? Check(isOk: true, message: array.okText)
+        : Check(isOk: false, message: array.notOkText);
   }
 
   String mapType(type) {
@@ -62,7 +69,6 @@ class CheckService implements ICheckService {
   }
 
   Check error(String? message) {
-    var tmp = message ?? "Error";
-    return Check(isOk: false, message: tmp);
+    return Check(isOk: false, message: message ?? "Error");
   }
 }

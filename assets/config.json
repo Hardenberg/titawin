@@ -4,6 +4,8 @@
     "headline": "Check your PC for",
     "test_array": [
         {
+            "id": "1",
+            "parent": "",
             "type": "ps",
             "execute": "(Get-WmiObject -Class Win32_ComputerSystem).SystemType",
             "compare": {
@@ -15,6 +17,8 @@
             "not_ok_text": "You are not running the correct Architecture"
         },
         {
+            "id": "2",
+            "parent": "3",
             "type": "ps",
             "execute": "(Get-WmiObject -Class Win32_OperatingSystem).Caption",
             "compare": {
@@ -26,6 +30,8 @@
             "not_ok_text": "You are not running the correct Version"
         },
         {
+            "id": "3",
+            "parent": "1",
             "type": "ps",
             "execute": "(Get-WmiObject -Class Win32_PhysicalMemory | Measure-Object -Property Capacity -Sum | Select-Object -ExpandProperty Sum) / 1GB",
             "compare": {
@@ -37,6 +43,8 @@
             "not_ok_text": "You don't have enough RAM"
         },
         {
+            "id": "4",
+            "parent": "1",
             "type": "ps",
             "execute": "(Get-WmiObject -Class Win32_ComputerSystem).NumberOfLogicalProcessors",
             "compare": {
@@ -48,6 +56,8 @@
             "not_ok_text": "You don't have enough CPU cores"
         },
         {
+            "id": "5",
+            "parent": "",
             "type": "ps",
             "execute": "[math]::Round(((Get-WmiObject -Class Win32_LogicalDisk -Filter \"DeviceID='C:'\").FreeSpace / 1GB), 0)",
             "compare": {

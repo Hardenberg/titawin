@@ -2,13 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:titawin/appbar/app_bar.dart';
-import 'package:titawin/application/helper/color_helper.dart';
-import 'package:titawin/application/helper/file_helper.dart';
-import 'package:titawin/application/view/gradient_box.dart';
-import 'package:titawin/application/view/headline.dart';
-import 'package:titawin/check/model/compare_model.dart';
-import 'package:titawin/check/view/check_item.dart';
+import 'package:titawin/application/application.dart';
 import 'package:window_manager/window_manager.dart';
+import 'package:titawin/check/check.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -56,24 +52,15 @@ class MyApp extends StatelessWidget {
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
                       var data = jsonDecode(snapshot.data.toString());
+                      var flatten =
+                          AdapterService().buildList(data['test_array']);
+
+                      var tree = AdapterService().reOrgList(flatten);
+
                       ListView list = ListView.builder(
-                          itemCount: data['test_array'].length,
+                          itemCount: tree.length,
                           itemBuilder: (context, index) {
-                            Compare compare = Compare(
-                                type: data['test_array'][index]['compare']
-                                    ['type'],
-                                value: data['test_array'][index]['compare']
-                                    ['value'],
-                                operator: data['test_array'][index]['compare']
-                                    ['operator']);
-                            return CheckItem(
-                              type: data['test_array'][index]['type'],
-                              execute: data['test_array'][index]['execute'],
-                              compare: compare,
-                              okText: data['test_array'][index]['ok_text'],
-                              notOkText: data['test_array'][index]
-                                  ['not_ok_text'],
-                            );
+                            return CheckItem(testArray: tree[index]);
                           });
 
                       return Column(
